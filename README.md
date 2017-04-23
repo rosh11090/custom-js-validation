@@ -8,51 +8,33 @@ You can use this library to validate ur form by ur custom error handling in easy
 3. All element should have unique id. It is for error handling.
 4. write your own error handling function to show on frontend.
 
-Here is sample steps.
+Here is sample steps. i am choosing mandatory_field as class to choose all element.
+## any element <cls="'mandatory_field'" valid="email|fname|nonempty" etc.>
 
-My form on html look like.
 
-  <form id="travellerForm" name="travellerForm" method="POST">
-  <select class="mandatory_field" valid='title|notempty' id="id_title" name="salutation">
-    <option value="" selected="selected">Title</option>
-    <option value="Mr.">Mr</option>
-    <option value="Mrs.">Mrs</option>
-  </select>
-  <input type="text" name="first_name" id="id_firstname" class="mandatory_field" valid="notempty|fname">
-  <input type="text" name="first_name" id="id_firstname" class="mandatory_field" valid="mname">
-  <input type="text" name="first_name" id="id_firstname" class="mandatory_field" valid="notempty|lname">
-  <input type="text" valid="email|notempty" id="email" name="email" class=" iconImg mandatory_field">
-  <input type="text" id="mobile" name="phone" valid="mobnum|notempty" class="mandatory_field"/>
-  <input type="button" id="makePayment" value="Submit"/>
-  </form>
-
-  function removeError(){
+```javascript
+  function showError(errMsg, elmId) {
     $('.has-error').removeClass('has-error');
     $(".InvalidError").remove();
     $('.bk_form_errorTxt').removeClass('bk_form_errorTxt');
-  }
+    $('#' + elmId).parent().append('<span class="InvalidError">' + errMsg + '</span>');
+    $('#' + elmId).addClass('has-error');
 
-  function showError(errMsg, elmId) {
-    removeError();
-    if (elmId) {
-        $('#' + elmId).parent().append('<span class="InvalidError">' + errMsg + '</span>');
-        $('#' + elmId).addClass('has-error');
-        try {
-            $('html,body').animate({
-                scrollTop: $("#" + elmId).offset().top
-            }, 'slow');
-        } catch (e) {};
-        $('#' + elmId).closest('.sh_detail').slideDown();
-      }
   }
-
+  ```
+```
   // Below is form validation logic.
+```
+  ```javascript
     var isValid = formValidator('travellerForm', 'mandatory_field', showError);
+  ```
     # mandatory_field is class_name i choose to identify all the field i want to validate
+   ```javascript
     if (!isValid){
         return false;
     } else {
      console.log('Valid form')
     }
+```
 
     
